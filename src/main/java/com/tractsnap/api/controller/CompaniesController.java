@@ -29,6 +29,8 @@ public class CompaniesController {
 
 	@Autowired
 	private CompaniesService companiesService;
+	
+	private static final String SUCCESS = "Success";
 
 	@PostMapping
 	public ResponseEntity<ResponseStructure<CompaniesDTO>> create(@RequestPart("logoImage") MultipartFile logoImage,
@@ -40,7 +42,7 @@ public class CompaniesController {
 
 		ResponseStructure<CompaniesDTO> respoStructure = new ResponseStructure<>();
 		respoStructure.setStatus(HttpStatus.CREATED.value());
-		respoStructure.setMessage("Success");
+		respoStructure.setMessage(SUCCESS);
 		respoStructure.setData(createdCompany );
 
 		return new ResponseEntity<>(respoStructure, HttpStatus.CREATED);
@@ -55,7 +57,7 @@ public class CompaniesController {
 
 		ResponseStructure<List<CompaniesDTO>> respoStructure = new ResponseStructure<>();
 		respoStructure.setStatus(HttpStatus.OK.value());
-		respoStructure.setMessage("Success");
+		respoStructure.setMessage(SUCCESS);
 		respoStructure.setData(companiesDtos);
 		return new ResponseEntity<>(respoStructure, HttpStatus.OK);
 	}
@@ -69,7 +71,7 @@ public class CompaniesController {
 
 		ResponseStructure<CompaniesDTO> respoStructure = new ResponseStructure<>();
 		respoStructure.setStatus(HttpStatus.OK.value());
-		respoStructure.setMessage("Success");
+		respoStructure.setMessage(SUCCESS);
 		respoStructure.setData(companiesDTO);
 
 		return new ResponseEntity<>(respoStructure, HttpStatus.OK);
@@ -87,14 +89,14 @@ public class CompaniesController {
 		
 		ResponseStructure<CompaniesDTO> respoStructure = new ResponseStructure<>();
 		respoStructure.setStatus(HttpStatus.OK.value());
-		respoStructure.setMessage("Success");
+		respoStructure.setMessage(SUCCESS);
 		respoStructure.setData(updateCompany);
 
 		return new ResponseEntity<>(respoStructure, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{companyId}")
-	public ResponseEntity<ResponseStructure<?>> delete(@PathVariable("companyId") Long companyId){
+	public ResponseEntity<ResponseStructure<String>> delete(@PathVariable("companyId") Long companyId){
 		
 		logger.info("<-------- Companies delete Request -------->");
 		
