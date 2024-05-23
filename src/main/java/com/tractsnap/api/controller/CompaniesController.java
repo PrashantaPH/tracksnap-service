@@ -96,7 +96,7 @@ public class CompaniesController {
 	}
 	
 	@DeleteMapping("/{companyId}")
-	public ResponseEntity<ResponseStructure<String>> delete(@PathVariable("companyId") Long companyId){
+	public ResponseEntity<ResponseStructure<String>> delete(@PathVariable("companyId") Long companyId) {
 		
 		logger.info("<-------- Companies delete Request -------->");
 		
@@ -105,7 +105,7 @@ public class CompaniesController {
 		ResponseStructure<String> respoStructure = new ResponseStructure<>();
 		
 		respoStructure.setStatus(HttpStatus.ACCEPTED.value());
-		respoStructure.setMessage("Success");
+		respoStructure.setMessage(SUCCESS);
 		respoStructure.setData("Companies ID :"+companyId+" deleted successfully...!");
 		
 		return new ResponseEntity<>(respoStructure, HttpStatus.ACCEPTED);
