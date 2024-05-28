@@ -1,4 +1,4 @@
-package com.tractsnap.api.mapper;
+package com.tracksnap.api.mapper;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 
-import com.tractsnap.api.dto.CompaniesDTO;
-import com.tractsnap.api.entity.Companies;
+import com.tracksnap.api.dto.CompaniesDTO;
+import com.tracksnap.api.entity.Companies;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CompaniesMapper {

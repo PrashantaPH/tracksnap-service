@@ -1,4 +1,4 @@
-package com.tractsnap.api.dto;
+package com.tracksnap.api.dto;
 
 public class KeyMatricesDTO {
 

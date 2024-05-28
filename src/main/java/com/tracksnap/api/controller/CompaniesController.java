@@ -1,10 +1,9 @@
-package com.tractsnap.api.controller;
+package com.tracksnap.api.controller;
 
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tractsnap.api.dto.CompaniesDTO;
-import com.tractsnap.api.dto.ResponseStructure;
-import com.tractsnap.api.service.CompaniesService;
+import com.tracksnap.api.dto.CompaniesDTO;
+import com.tracksnap.api.dto.ResponseStructure;
+import com.tracksnap.api.service.CompaniesService;
 
 @RestController
 @RequestMapping("/api/v1/companies")
@@ -26,8 +25,11 @@ public class CompaniesController {
 
 	private static Logger logger = LoggerFactory.getLogger(CompaniesController.class);
 
-	@Autowired
 	private CompaniesService companiesService;
+	
+	public CompaniesController(CompaniesService companiesService){
+		this.companiesService = companiesService;
+	}
 	
 	@PostMapping
 	public ResponseEntity<ResponseStructure<CompaniesDTO>> create(@RequestPart("logoImage") MultipartFile logoImage,

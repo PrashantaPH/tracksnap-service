@@ -1,4 +1,4 @@
-package com.tractsnap.api.dto;
+package com.tracksnap.api.dto;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

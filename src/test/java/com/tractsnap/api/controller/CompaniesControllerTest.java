@@ -15,10 +15,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.tractsnap.api.dto.CompaniesDTO;
-import com.tractsnap.api.dto.KeyMatricesDTO;
-import com.tractsnap.api.dto.ResponseStructure;
-import com.tractsnap.api.service.CompaniesService;
+import com.tracksnap.api.controller.CompaniesController;
+import com.tracksnap.api.dto.CompaniesDTO;
+import com.tracksnap.api.dto.KeyMatricesDTO;
+import com.tracksnap.api.dto.ResponseStructure;
+import com.tracksnap.api.service.CompaniesService;
 
 class CompaniesControllerTest {
 

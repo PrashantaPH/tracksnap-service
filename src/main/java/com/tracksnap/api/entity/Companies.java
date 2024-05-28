@@ -1,4 +1,4 @@
-package com.tractsnap.api.entity;
+package com.tracksnap.api.entity;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

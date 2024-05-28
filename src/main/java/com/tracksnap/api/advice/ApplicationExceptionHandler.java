@@ -1,4 +1,4 @@
-package com.tractsnap.api.advice;
+package com.tracksnap.api.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
-import com.tractsnap.api.dto.ResponseStructure;
-import com.tractsnap.api.exception.ResourceNotFoundException;
+import com.tracksnap.api.dto.ResponseStructure;
+import com.tracksnap.api.exception.ResourceNotFoundException;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
@@ -30,7 +30,7 @@ public class ApplicationExceptionHandler {
 		ResponseStructure<?> responseStructure = new ResponseStructure<>();
 		
 		responseStructure.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-		responseStructure.setMessage("An unexpected error occurred. Please try again later...!"+ exception.getMessage());
+		responseStructure.setMessage("An unexpected error occurred."+ exception.getMessage());
 		
 		return new ResponseEntity<>(responseStructure, HttpStatus.INTERNAL_SERVER_ERROR);
 	}

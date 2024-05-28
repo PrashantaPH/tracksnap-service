@@ -1,8 +1,8 @@
-package com.tractsnap.api.repository;
+package com.tracksnap.api.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tractsnap.api.entity.Companies;
+import com.tracksnap.api.entity.Companies;
 
 public interface CompaniesRepository extends JpaRepository<Companies, Long>{
 

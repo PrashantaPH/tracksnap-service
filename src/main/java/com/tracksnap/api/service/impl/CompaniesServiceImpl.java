@@ -1,35 +1,40 @@
-package com.tractsnap.api.service.impl;
+package com.tracksnap.api.service.impl;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tractsnap.api.dto.CompaniesDTO;
-import com.tractsnap.api.dto.KeyMatricesDTO;
-import com.tractsnap.api.entity.Companies;
-import com.tractsnap.api.entity.KeyMatrices;
-import com.tractsnap.api.exception.ResourceNotFoundException;
-import com.tractsnap.api.mapper.CompaniesMapper;
-import com.tractsnap.api.repository.CompaniesRepository;
-import com.tractsnap.api.service.CompaniesService;
+import com.tracksnap.api.dto.CompaniesDTO;
+import com.tracksnap.api.dto.KeyMatricesDTO;
+import com.tracksnap.api.entity.Companies;
+import com.tracksnap.api.entity.KeyMatrices;
+import com.tracksnap.api.exception.ResourceNotFoundException;
+import com.tracksnap.api.mapper.CompaniesMapper;
+import com.tracksnap.api.repository.CompaniesRepository;
+import com.tracksnap.api.service.CompaniesService;
 
 @Service
 public class CompaniesServiceImpl implements CompaniesService {
 
 	private static Logger logger = LoggerFactory.getLogger(CompaniesServiceImpl.class);
 
-	@Autowired
 	private CompaniesMapper companiesMapper;
 
-	@Autowired
 	private CompaniesRepository companiesRepository;
+	
+	public CompaniesServiceImpl(CompaniesMapper companiesMapper, CompaniesRepository companiesRepository) {
+		this.companiesMapper = companiesMapper;
+		this.companiesRepository = companiesRepository;
+	}
 
 	@Override
 	public CompaniesDTO createCompany(MultipartFile logoImage, MultipartFile countryFlagImage, CompaniesDTO companiesDto) {
@@ -49,7 +54,7 @@ public class CompaniesServiceImpl implements CompaniesService {
 	public List<CompaniesDTO> getAllCompanies() {
 		List<Companies> companies = companiesRepository.findAll();
 
-		if (companies.size() == 0) {
+		if (companies.isEmpty()) {
 			throw new ResourceNotFoundException("Companies not avalable " + companies.size());
 		}
 		return companiesMapper.entityToDtoList(companies);
@@ -63,6 +68,7 @@ public class CompaniesServiceImpl implements CompaniesService {
 			logger.error("Companies given ID : {} is not available...!", companyId);
 			throw new ResourceNotFoundException("Companies given ID : " + companyId + " not avalable...!");
 		}
+		
 		return companiesMapper.entityToDto(optional.get());
 	}
 
@@ -80,8 +86,8 @@ public class CompaniesServiceImpl implements CompaniesService {
 			if(countryFlagImage != null) {
 				updatecompaniesDtoObj.setCountryFlagImage(countryFlagImage.getBytes());
 			}
-		} catch (IOException e) {
-			logger.error("Exception occurred -> {}", e.getMessage(), e);
+		} catch (IOException ex) {
+			logger.error("Exception occurred -> {}", ex.getMessage(), ex);
 		}
 
 	    Companies existingCompany = optional.get();
@@ -96,7 +102,7 @@ public class CompaniesServiceImpl implements CompaniesService {
 	public void deleteCompany(Long companyId) {
 		Companies companies = companiesRepository.findById(companyId)
 				.orElseThrow(
-						() -> new ResourceNotFoundException("Companies is not exists with the given id : " + companyId));
+						() -> new ResourceNotFoundException("Companies is not exists with the given ID : " + companyId));
 
 		companiesRepository.delete(companies);
 	}
@@ -128,5 +134,17 @@ public class CompaniesServiceImpl implements CompaniesService {
 	    existingKeyMatrices.setAnnualRevenue(updateKeyMatricesDto.getAnnualRevenue());
 	    existingKeyMatrices.setEmployeeCount(updateKeyMatricesDto.getEmployeeCount());
     }
+	
+	public void downloadFile(String fileName, byte[] byteArr) {
+		String home = System.getProperty("user.home");
+		Path path = Paths.get(home, "downloads", fileName);
+		
+		try {
+			Files.write(path, byteArr);
+			logger.info("File has been downloaded...!");
+		} catch (Exception ex) {
+			logger.error("Exception occurred -> {}", ex.getMessage(), ex);
+		}
+	}
 
 }

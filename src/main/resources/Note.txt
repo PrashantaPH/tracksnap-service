@@ -1,0 +1,14 @@
+Tracksnap Service URL = http://localhost:8080/api/v1/companies
+
+Note : We are using 'mapstruct' dependency for mapping DTO to entity conversion
+
+Note : We are implementing mockito testing for that also i have added one 'mockito-junit-jupiter' dependency
+
+Swagger OpenAPI URL = http://localhost:8080/swagger-ui/index.html
+Note : For we have to add 'org.springdoc' dependency
+Note : If you don't want show delete or post you can add in on to of the method like (@Hidden)
+
+# MySQL database connection properties
+#spring.datasource.url=jdbc:${MYSQL_DB_URI}
+#spring.datasource.username=${MYSQL_DB_USER}
+#spring.datasource.password=${MYSQL_DB_PASSWORD}

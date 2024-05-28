@@ -1,10 +1,10 @@
-package com.tractsnap.api.service;
+package com.tracksnap.api.service;
 
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tractsnap.api.dto.CompaniesDTO;
+import com.tracksnap.api.dto.CompaniesDTO;
 
 public interface CompaniesService {
 
