@@ -83,6 +83,26 @@ public class CompaniesController {
 		
 		companiesService.deleteCompany(companyId);
 		
-		return ResponseStructure.accepted(companyId);
+		return ResponseStructure.accepted("Companies ID :" + companyId + " deleted successfully...!");
+	}
+	
+	@GetMapping("/download-logoimage/{companyId}")
+	public ResponseEntity<ResponseStructure<String>> downloadLogoImage(@PathVariable("companyId") Long companyId) {
+		
+		logger.info("<-------- Companies LogoImage download Request -------->");
+		
+		companiesService.downloadLogoImageByCompanyId(companyId);
+		
+		return ResponseStructure.ok("Image downloaded successfully in downloads folder.");
+	}
+	
+	@GetMapping("/logo-image/{companyId}")
+	public ResponseEntity<ResponseStructure<byte[]>> getLogoImage(@PathVariable("companyId") Long companyId) {
+		
+		logger.info("<-------- Companies getLogoImage Request -------->");
+		
+		byte[] byteArr = companiesService.getLogoImageByCompanyId(companyId);
+		
+		return ResponseStructure.ok(byteArr);
 	}
 }

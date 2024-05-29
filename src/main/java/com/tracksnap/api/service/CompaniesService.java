@@ -8,13 +8,17 @@ import com.tracksnap.api.dto.CompaniesDTO;
 
 public interface CompaniesService {
 
-	public CompaniesDTO createCompany(MultipartFile logoImage, MultipartFile countryFlagImage, CompaniesDTO companiesDTO);
+	CompaniesDTO createCompany(MultipartFile logoImage, MultipartFile countryFlagImage, CompaniesDTO companiesDTO);
 	
-	public List<CompaniesDTO> getAllCompanies();
+	List<CompaniesDTO> getAllCompanies();
 	
-	public CompaniesDTO getCompaniesById(Long companyId);
+	CompaniesDTO getCompaniesById(Long companyId);
 	
-	public CompaniesDTO updateCompany(Long companyId, MultipartFile logoImage, MultipartFile countryFlagImage, CompaniesDTO companiesDTO);
+	CompaniesDTO updateCompany(Long companyId, MultipartFile logoImage, MultipartFile countryFlagImage, CompaniesDTO companiesDTO);
 	
-	public void deleteCompany(Long companyId);
+	void deleteCompany(Long companyId);
+	
+	void downloadLogoImageByCompanyId(Long companyId);
+	
+	byte[] getLogoImageByCompanyId(Long companyId);
 }

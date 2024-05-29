@@ -30,7 +30,7 @@ public class ApplicationExceptionHandler {
 		ResponseStructure<?> responseStructure = new ResponseStructure<>();
 		
 		responseStructure.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-		responseStructure.setMessage("An unexpected error occurred."+ exception.getMessage());
+		responseStructure.setMessage("An unexpected error occurred. "+ exception.getMessage());
 		
 		return new ResponseEntity<>(responseStructure, HttpStatus.INTERNAL_SERVER_ERROR);
 	}

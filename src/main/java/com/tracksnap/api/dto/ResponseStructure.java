@@ -56,10 +56,10 @@ public class ResponseStructure<T> {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
-	public static <T> ResponseEntity<ResponseStructure<String>> accepted(T data) {
-		ResponseStructure<String> response = new ResponseStructure<>();
+	public static <T> ResponseEntity<ResponseStructure<T>> accepted(T data) {
+		ResponseStructure<T> response = new ResponseStructure<>();
 		response.setStatus(HttpStatus.ACCEPTED.value());
-		response.setData("Companies ID :" + data + " deleted successfully...!");
+		response.setData(data);
 		
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}

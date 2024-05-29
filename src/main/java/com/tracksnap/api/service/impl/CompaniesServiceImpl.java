@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -135,16 +136,28 @@ public class CompaniesServiceImpl implements CompaniesService {
 	    existingKeyMatrices.setEmployeeCount(updateKeyMatricesDto.getEmployeeCount());
     }
 	
-	public void downloadFile(String fileName, byte[] byteArr) {
+	@Override
+	public void downloadLogoImageByCompanyId(Long companyId) {
 		String home = System.getProperty("user.home");
-		Path path = Paths.get(home, "downloads", fileName);
-		
+		Path path = Paths.get(home, "downloads", "LogoImage.png");
+		byte[] logoImageByteArr = companiesRepository.getLogoImageByCompanyId(companyId);
 		try {
-			Files.write(path, byteArr);
-			logger.info("File has been downloaded...!");
+			if(logoImageByteArr != null) {
+				Files.write(path, logoImageByteArr);
+				logger.info("File has been downloaded...!");
+			}
 		} catch (Exception ex) {
 			logger.error("Exception occurred -> {}", ex.getMessage(), ex);
 		}
 	}
-
+	
+	@Override
+	public byte[] getLogoImageByCompanyId(Long companyId) {
+		byte[] logoImageByteArr = companiesRepository.getLogoImageByCompanyId(companyId);
+		
+		Objects.requireNonNull(logoImageByteArr, "Logo Image is not exists with the given ID : " + companyId);
+		
+		return logoImageByteArr;
+	}
+	
 }
