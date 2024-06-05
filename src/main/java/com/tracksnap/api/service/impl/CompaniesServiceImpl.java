@@ -1,10 +1,16 @@
 package com.tracksnap.api.service.impl;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.opencsv.CSVWriter;
 import com.tracksnap.api.dto.CompaniesDTO;
 import com.tracksnap.api.dto.KeyMatricesDTO;
 import com.tracksnap.api.entity.Companies;
@@ -58,7 +65,44 @@ public class CompaniesServiceImpl implements CompaniesService {
 		if (companies.isEmpty()) {
 			throw new ResourceNotFoundException("Companies not avalable " + companies.size());
 		}
-		return companiesMapper.entityToDtoList(companies);
+		List<CompaniesDTO> companiesDtos = companiesMapper.entityToDtoList(companies);
+		
+		writeCompaniesToCsv(companiesDtos);
+		
+		/* Sorting by CompanyId in descending order: */
+		Collections.sort(companiesDtos, (company1, company2) -> Long.compare(company2.getCompanyId(), company1.getCompanyId()));
+		return companiesDtos;
+	}
+	
+	private void writeCompaniesToCsv(List<CompaniesDTO> companiesDtos) {
+		try (CSVWriter writer = new CSVWriter(new FileWriter("src/main/resources/companies_data.csv"))) {
+			String[] header = { "ID", "Name", "Email", "FoundedYear", "HeadquarterCity", "Phone", "Website",
+					"FacebookUrl", "TwitterUrl", "LinkedInUrl", "InstagramUrl", "KM KeyMatricesId",
+					"KM LatestFundingRound", "KM AnnualRevenue", "KM EmployeeCount"};
+			writer.writeNext(header);
+			for (CompaniesDTO companiesDto : companiesDtos) {
+                String[] data = {
+                		companiesDto.getCompanyId().toString(),
+                		companiesDto.getName(),
+                		companiesDto.getEmail(),
+                		companiesDto.getFoundedYear()+"",
+                		companiesDto.getHeadquarterCity(),
+                		companiesDto.getPhone(),
+                		companiesDto.getWebsite(),
+                		companiesDto.getFacebookUrl(),
+                		companiesDto.getTwitterUrl(),
+                		companiesDto.getLinkedInUrl(),
+                		companiesDto.getInstagramUrl(),
+                		companiesDto.getKeyMatricesDTO().getKeyMatricesId().toString(),
+                		companiesDto.getKeyMatricesDTO().getLatestFundingRound(),
+                		companiesDto.getKeyMatricesDTO().getAnnualRevenue(),
+                		companiesDto.getKeyMatricesDTO().getEmployeeCount()+""
+                };
+                writer.writeNext(data);
+            }
+			logger.info("CSV writing process completed successfully");
+		} catch (Exception e) {
+		}
 	}
 
 	@Override
