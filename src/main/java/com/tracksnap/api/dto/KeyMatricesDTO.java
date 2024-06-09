@@ -1,5 +1,7 @@
 package com.tracksnap.api.dto;
 
+import java.sql.Date;
+
 public class KeyMatricesDTO {
 
 	private Long keyMatricesId;
@@ -9,6 +11,10 @@ public class KeyMatricesDTO {
 	private String annualRevenue;
 
 	private int employeeCount;
+
+	private Date createdAt;
+
+	private Date updatedAt;
 
 	public Long getKeyMatricesId() {
 		return keyMatricesId;
@@ -40,6 +46,22 @@ public class KeyMatricesDTO {
 
 	public void setEmployeeCount(int employeeCount) {
 		this.employeeCount = employeeCount;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 }

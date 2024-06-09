@@ -13,51 +13,39 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "key_matrices")
+@Table(name = "people")
 @DynamicInsert
 @DynamicUpdate
-public class KeyMatrices {
+public class People {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "key_matrices_id")
-	private Long keyMatricesId;
+	@Column(name = "count_id")
+	private Long countId;
 
-	@Column(name = "latest_funding_round")
-	private String latestFundingRound;
-
-	@Column(name = "annual_revenue")
-	private String annualRevenue;
+	private Date date;
 
 	@Column(name = "employee_count")
 	private int employeeCount;
-	
+
 	private Date createdAt;
 
 	private Date updatedAt;
 
-	public Long getKeyMatricesId() {
-		return keyMatricesId;
+	public Long getCountId() {
+		return countId;
 	}
 
-	public void setKeyMatricesId(Long keyMatricesId) {
-		this.keyMatricesId = keyMatricesId;
+	public void setCountId(Long countId) {
+		this.countId = countId;
 	}
 
-	public String getLatestFundingRound() {
-		return latestFundingRound;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setLatestFundingRound(String latestFundingRound) {
-		this.latestFundingRound = latestFundingRound;
-	}
-
-	public String getAnnualRevenue() {
-		return annualRevenue;
-	}
-
-	public void setAnnualRevenue(String annualRevenue) {
-		this.annualRevenue = annualRevenue;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public int getEmployeeCount() {
@@ -84,5 +72,4 @@ public class KeyMatrices {
 		this.updatedAt = updatedAt;
 	}
 
-	
 }

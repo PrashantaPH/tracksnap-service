@@ -1,16 +1,12 @@
 package com.tracksnap.api.service.impl;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,9 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.CSVWriter;
 import com.tracksnap.api.dto.CompaniesDTO;
-import com.tracksnap.api.dto.KeyMatricesDTO;
+import com.tracksnap.api.entity.AboutCompany;
 import com.tracksnap.api.entity.Companies;
 import com.tracksnap.api.entity.KeyMatrices;
+import com.tracksnap.api.entity.People;
+import com.tracksnap.api.entity.Reports;
+import com.tracksnap.api.entity.Revenue;
+import com.tracksnap.api.entity.Sectors;
 import com.tracksnap.api.exception.ResourceNotFoundException;
 import com.tracksnap.api.mapper.CompaniesMapper;
 import com.tracksnap.api.repository.CompaniesRepository;
@@ -46,13 +46,15 @@ public class CompaniesServiceImpl implements CompaniesService {
 
 	@Override
 	public CompaniesDTO createCompany(MultipartFile logoImage, MultipartFile countryFlagImage, CompaniesDTO companiesDto) {
+		try {
+			companiesDto.setLogoImage(Arrays.copyOf( logoImage.getBytes(), logoImage.getBytes().length ));
+			companiesDto.setCountryFlagImage(Arrays.copyOf( countryFlagImage.getBytes(), countryFlagImage.getBytes().length ));
+		} catch (IOException e) {
+			logger.error("Exception occurred -> {}", e.getMessage(), e);
+		}
+		
 	    Companies companies = companiesMapper.dtoToEntity(companiesDto);
-	    try {
-	        companies.setLogoImage(logoImage.getBytes());
-	        companies.setcountryFlagImage(countryFlagImage.getBytes());
-	    } catch (IOException e) {
-	        logger.error("Exception occurred -> {}", e.getMessage(), e);
-	    }
+	    
 	    companiesRepository.save(companies);
 
 	    return companiesMapper.entityToDto(companies);
@@ -153,31 +155,50 @@ public class CompaniesServiceImpl implements CompaniesService {
 	}
 	
 	private void dtoToEntityUpdate(Companies existingCompany, CompaniesDTO updatecompaniesDtoObj) {
-//	    // Update Company properties
-	    existingCompany.setName(updatecompaniesDtoObj.getName());
-	    existingCompany.setFoundedYear(updatecompaniesDtoObj.getFoundedYear());
-	    existingCompany.setHeadquarterCity(updatecompaniesDtoObj.getHeadquarterCity());
-	    existingCompany.setWebsite(updatecompaniesDtoObj.getWebsite());
-	    existingCompany.setPhone(updatecompaniesDtoObj.getPhone());
-	    existingCompany.setEmail(updatecompaniesDtoObj.getEmail());
-	    existingCompany.setFacebookUrl(updatecompaniesDtoObj.getFacebookUrl());
-	    existingCompany.setTwitterUrl(updatecompaniesDtoObj.getTwitterUrl());
-	    existingCompany.setLinkedInUrl(updatecompaniesDtoObj.getLinkedInUrl());
-	    existingCompany.setInstagramUrl(updatecompaniesDtoObj.getInstagramUrl());
-	    byte[] logoImage = updatecompaniesDtoObj.getLogoImage();
-        if ( logoImage != null ) {
-        	existingCompany.setLogoImage( Arrays.copyOf( logoImage, logoImage.length ) );
+		companiesMapper.updateCompanyFromDto(updatecompaniesDtoObj, existingCompany);
+
+		if (updatecompaniesDtoObj.getKeyMatricesDTO() != null) {
+            if (existingCompany.getKeyMatrices() == null) {
+                existingCompany.setKeyMatrices(new KeyMatrices());
+            }
+            companiesMapper.updateKeyMatricesFromDto(updatecompaniesDtoObj.getKeyMatricesDTO(), existingCompany.getKeyMatrices());
         }
-        else {
-        	existingCompany.setLogoImage( null );
+	    
+		if (updatecompaniesDtoObj.getAboutCompanyDTO() != null) {
+            if (existingCompany.getAboutCompany() == null) {
+                existingCompany.setAboutCompany(new AboutCompany());
+            }
+            companiesMapper.updateAboutCompanyFromDto(updatecompaniesDtoObj.getAboutCompanyDTO(), existingCompany.getAboutCompany());
         }
 
-//	    // Update KeyMatrices properties
-	    KeyMatricesDTO updateKeyMatricesDto = updatecompaniesDtoObj.getKeyMatricesDTO();
-	    KeyMatrices existingKeyMatrices = existingCompany.getKeyMatrices();
-	    existingKeyMatrices.setLatestFundingRound(updateKeyMatricesDto.getLatestFundingRound());
-	    existingKeyMatrices.setAnnualRevenue(updateKeyMatricesDto.getAnnualRevenue());
-	    existingKeyMatrices.setEmployeeCount(updateKeyMatricesDto.getEmployeeCount());
+        if (updatecompaniesDtoObj.getSectorsDTO() != null) {
+            if (existingCompany.getSectors() == null) {
+                existingCompany.setSectors(new Sectors());
+            }
+            companiesMapper.updateSectorsFromDto(updatecompaniesDtoObj.getSectorsDTO(), existingCompany.getSectors());
+        }
+
+        if (updatecompaniesDtoObj.getPeopleDTO() != null) {
+            if (existingCompany.getPeople() == null) {
+                existingCompany.setPeople(new People());
+            }
+            companiesMapper.updatePeopleFromDto(updatecompaniesDtoObj.getPeopleDTO(), existingCompany.getPeople());
+        }
+
+        if (updatecompaniesDtoObj.getRevenueDTO() != null) {
+            if (existingCompany.getRevenue() == null) {
+                existingCompany.setRevenue(new Revenue());
+            }
+            companiesMapper.updateRevenueFromDto(updatecompaniesDtoObj.getRevenueDTO(), existingCompany.getRevenue());
+        }
+
+        if (updatecompaniesDtoObj.getReportsDTO() != null) {
+            if (existingCompany.getReports() == null) {
+                existingCompany.setReports(new Reports());
+            }
+            companiesMapper.updateReportsFromDto(updatecompaniesDtoObj.getReportsDTO(), existingCompany.getReports());
+        }
+	    
     }
 	
 	@Override

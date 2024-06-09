@@ -1,5 +1,7 @@
 package com.tracksnap.api.entity;
 
+import java.sql.Date;
+
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -48,6 +50,10 @@ public class Companies {
 
 	private String email;
 
+	private Date createdAt;
+
+	private Date updatedAt;
+
 	@Column(name = "facebook_url")
 	private String facebookUrl;
 
@@ -64,28 +70,25 @@ public class Companies {
 	@JoinColumn(name = "fk_key_matrices_id")
 	private KeyMatrices keyMatrices;
 
-	public Companies() {
-		super();
-	}
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_about_comapny_id")
+	private AboutCompany aboutCompany;
 
-	public Companies(String name, byte[] logoImage, int foundedYear, String headquarterCity,
-			byte[] countryFlagImage, String website, String phone, String email, String facebookUrl, String twitterUrl,
-			String linkedInUrl, String instagramUrl, KeyMatrices keyMatrices) {
-		super();
-		this.name = name;
-		this.logoImage = logoImage;
-		this.foundedYear = foundedYear;
-		this.headquarterCity = headquarterCity;
-		this.countryFlagImage = countryFlagImage;
-		this.website = website;
-		this.phone = phone;
-		this.email = email;
-		this.facebookUrl = facebookUrl;
-		this.twitterUrl = twitterUrl;
-		this.linkedInUrl = linkedInUrl;
-		this.instagramUrl = instagramUrl;
-		this.keyMatrices = keyMatrices;
-	}
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_sectors_id")
+	private Sectors sectors;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_people_id")
+	private People people;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_revenue_id")
+	private Revenue revenue;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_reports_id")
+	private Reports reports;
 
 	public Long getCompanyId() {
 		return companyId;
@@ -127,11 +130,11 @@ public class Companies {
 		this.headquarterCity = headquarterCity;
 	}
 
-	public byte[] getcountryFlagImage() {
+	public byte[] getCountryFlagImage() {
 		return countryFlagImage;
 	}
 
-	public void setcountryFlagImage(byte[] countryFlagImage) {
+	public void setCountryFlagImage(byte[] countryFlagImage) {
 		this.countryFlagImage = countryFlagImage;
 	}
 
@@ -157,6 +160,22 @@ public class Companies {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public String getFacebookUrl() {
@@ -197,6 +216,46 @@ public class Companies {
 
 	public void setKeyMatrices(KeyMatrices keyMatrices) {
 		this.keyMatrices = keyMatrices;
+	}
+
+	public AboutCompany getAboutCompany() {
+		return aboutCompany;
+	}
+
+	public void setAboutCompany(AboutCompany aboutCompany) {
+		this.aboutCompany = aboutCompany;
+	}
+
+	public Sectors getSectors() {
+		return sectors;
+	}
+
+	public void setSectors(Sectors sectors) {
+		this.sectors = sectors;
+	}
+
+	public People getPeople() {
+		return people;
+	}
+
+	public void setPeople(People people) {
+		this.people = people;
+	}
+
+	public Revenue getRevenue() {
+		return revenue;
+	}
+
+	public void setRevenue(Revenue revenue) {
+		this.revenue = revenue;
+	}
+
+	public Reports getReports() {
+		return reports;
+	}
+
+	public void setReports(Reports reports) {
+		this.reports = reports;
 	}
 
 }

@@ -1,4 +1,5 @@
 "ID","Name","Email","FoundedYear","HeadquarterCity","Phone","Website","FacebookUrl","TwitterUrl","LinkedInUrl","InstagramUrl","KM KeyMatricesId","KM LatestFundingRound","KM AnnualRevenue","KM EmployeeCount"
 "1","SJP","info@example1.com","2005","UK","+1-123-456-7890","https://chatgpt.com/","https://facebook.com/home","https://twitter.com/home","https://linkedin.com/company/home","https://instagram.com/home","1","Series B","$100 million","500"
-"2","Tracxn","info@tracxn.com","2005","UK","+1-123-456-7890","https://chatgpt.com/","https://tracxnfacebook.com/home","https://tracxntwitter.com/home","https://tracxnlinkedin.com/company/home","https://tracxninstagram.com/home","2","Series G","$100 million","250"
-"3","TCS","info@example1.com","1980","India","+1-123-456-2222","https://tcstest.com/","https://facebook.com/home","https://twitter.com/home","https://linkedin.com/company/home","https://instagram.com/home","3","Series A","$1000 million","50000"
+"2","Intellect","info@example1.com","2005","New York","+1-123-456-7890","https://example1.com","https://facebook.com/example1","https://twitter.com/example1","https://linkedin.com/company/example1","https://instagram.com/example1","2","Series B","$10 million","200"
+"3","Test","info@example1.com","2005","New York","+1-123-456-7890","https://example1.com","https://facebook.com/example1","https://twitter.com/example1","https://linkedin.com/company/example1","https://instagram.com/example1","3","Series B","$10 million","200"
+"4","Corporate LTD","company@gmail.com","2000","bngl",,,,,,,"12","Series B",,"0"

@@ -20,6 +20,8 @@ import com.tracksnap.api.dto.CompaniesDTO;
 import com.tracksnap.api.dto.ResponseStructure;
 import com.tracksnap.api.service.CompaniesService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/companies")
 @CrossOrigin("*")
@@ -29,14 +31,14 @@ public class CompaniesController {
 
 	private CompaniesService companiesService;
 	
-	public CompaniesController(CompaniesService companiesService){
+	public CompaniesController(CompaniesService companiesService) {
 		this.companiesService = companiesService;
 	}
 	
 	@PostMapping
 	public ResponseEntity<ResponseStructure<CompaniesDTO>> create(@RequestPart("logoImage") MultipartFile logoImage,
 			@RequestPart("countryFlagImage") MultipartFile countryFlagImage,
-			@RequestPart("companies") CompaniesDTO companiesDto) {
+			@Valid @RequestPart("companies") CompaniesDTO companiesDto) {
 
 		logger.info("<-------- Companies Create Request -------->");
 
