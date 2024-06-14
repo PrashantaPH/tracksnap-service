@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tracksnap.api.dto.CompaniesDTO;
+import com.tracksnap.api.dto.SearchCompaniesResponse;
 
 public interface CompaniesService {
 
@@ -21,4 +22,12 @@ public interface CompaniesService {
 	void downloadLogoImageByCompanyId(Long companyId);
 	
 	byte[] getLogoImageByCompanyId(Long companyId);
+	
+	Long getCountOfRecord();
+	
+	List<Long> getAllCompanyId();
+	
+	List<CompaniesDTO> findByCompanyName(String name);
+	
+	List<SearchCompaniesResponse> searchByCompanyName(String name);
 }

@@ -15,6 +15,7 @@ import com.tracksnap.api.dto.KeyMatricesDTO;
 import com.tracksnap.api.dto.PeopleDTO;
 import com.tracksnap.api.dto.ReportsDTO;
 import com.tracksnap.api.dto.RevenueDTO;
+import com.tracksnap.api.dto.SearchCompaniesResponse;
 import com.tracksnap.api.dto.SectorsDTO;
 import com.tracksnap.api.entity.AboutCompany;
 import com.tracksnap.api.entity.Companies;
@@ -77,5 +78,7 @@ public interface CompaniesMapper {
 	@Mapping(target = "updatedAt", expression = "java(new java.sql.Date(System.currentTimeMillis()))")
 	@Mapping(target = "reportId", ignore = true)
 	void updateReportsFromDto(ReportsDTO dto, @MappingTarget Reports entity);
+	
+	List<SearchCompaniesResponse> entityToSearchCompaniesResponse(List<Companies> companiesList);
 
 }

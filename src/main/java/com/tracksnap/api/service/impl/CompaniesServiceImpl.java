@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.CSVWriter;
 import com.tracksnap.api.dto.CompaniesDTO;
+import com.tracksnap.api.dto.SearchCompaniesResponse;
 import com.tracksnap.api.entity.AboutCompany;
 import com.tracksnap.api.entity.Companies;
 import com.tracksnap.api.entity.KeyMatrices;
@@ -69,7 +73,7 @@ public class CompaniesServiceImpl implements CompaniesService {
 		}
 		List<CompaniesDTO> companiesDtos = companiesMapper.entityToDtoList(companies);
 		
-		writeCompaniesToCsv(companiesDtos);
+//		writeCompaniesToCsv(companiesDtos);
 		
 		/* Sorting by CompanyId in descending order: */
 		Collections.sort(companiesDtos, (company1, company2) -> Long.compare(company2.getCompanyId(), company1.getCompanyId()));
@@ -95,6 +99,7 @@ public class CompaniesServiceImpl implements CompaniesService {
                 		companiesDto.getTwitterUrl(),
                 		companiesDto.getLinkedInUrl(),
                 		companiesDto.getInstagramUrl(),
+                		//Base64.getDecoder().decode(companiesDto.getLogoImage()).toString(),
                 		companiesDto.getKeyMatricesDTO().getKeyMatricesId().toString(),
                 		companiesDto.getKeyMatricesDTO().getLatestFundingRound(),
                 		companiesDto.getKeyMatricesDTO().getAnnualRevenue(),
@@ -223,6 +228,40 @@ public class CompaniesServiceImpl implements CompaniesService {
 		Objects.requireNonNull(logoImageByteArr, "Logo Image is not exists with the given ID : " + companyId);
 		
 		return logoImageByteArr;
+	}
+
+	@Override
+	public Long getCountOfRecord() {
+		return companiesRepository.countOfRecords();
+	}
+
+	@Override
+	public List<Long> getAllCompanyId() {
+		return companiesRepository.getAllCompanyId();
+	}
+
+	@Override
+	public List<CompaniesDTO> findByCompanyName(String name) {
+		List<Companies> list = new ArrayList<>();
+		String regex = "^[A-Za-z\\s\\-\\,\\.']+$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(name);
+		
+		if(matcher.matches()) {
+			list = companiesRepository.findByNameStartsWith(name);
+		} else {
+			throw new ResourceNotFoundException("Invalid name parameter. Name should be a string.");
+		}
+		
+		return companiesMapper.entityToDtoList(list);
+	}
+	
+	@Override
+	public List<SearchCompaniesResponse> searchByCompanyName(String name) {
+		List<Companies> list = new ArrayList<>();
+		list = companiesRepository.searchByName(name);
+		
+		return companiesMapper.entityToSearchCompaniesResponse(list);
 	}
 	
 }

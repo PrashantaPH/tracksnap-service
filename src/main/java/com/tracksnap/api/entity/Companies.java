@@ -90,6 +90,19 @@ public class Companies {
 	@JoinColumn(name = "fk_reports_id")
 	private Reports reports;
 
+	public Companies() {
+		super();
+	}
+
+	public Companies(Long companyId, String name, int foundedYear,  String headquarterCity, byte[] logoImage) {
+		super();
+		this.companyId = companyId;
+		this.name = name;
+		this.foundedYear = foundedYear;
+		this.headquarterCity = headquarterCity;
+		this.logoImage = logoImage;
+	}
+
 	public Long getCompanyId() {
 		return companyId;
 	}

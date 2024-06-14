@@ -7,8 +7,8 @@ RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
 
-COPY --from=builder target/*.jar tractsnap-service.jar
+COPY --from=builder target/*.jar tracksnap-service.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","/tractsnap-service.jar"]
+ENTRYPOINT ["java","-jar","/tracksnap-service.jar"]
