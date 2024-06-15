@@ -13,11 +13,17 @@ public class CompaniesDTO {
 	@NotNull(message = "Name is required")
 	private String name;
 
+	private String logoLink;
+
 	private byte[] logoImage;
 
 	private int foundedYear;
 
 	private String headquarterCity;
+
+	private String countryLink;
+
+	private String countryName;
 
 	private byte[] countryFlagImage;
 
@@ -74,6 +80,14 @@ public class CompaniesDTO {
 		this.name = name;
 	}
 
+	public String getLogoLink() {
+		return logoLink;
+	}
+
+	public void setLogoLink(String logoLink) {
+		this.logoLink = logoLink;
+	}
+
 	public byte[] getLogoImage() {
 		return logoImage;
 	}
@@ -96,6 +110,22 @@ public class CompaniesDTO {
 
 	public void setHeadquarterCity(String headquarterCity) {
 		this.headquarterCity = headquarterCity;
+	}
+
+	public String getCountryLink() {
+		return countryLink;
+	}
+
+	public void setCountryLink(String countryLink) {
+		this.countryLink = countryLink;
+	}
+
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
 	}
 
 	public byte[] getCountryFlagImage() {

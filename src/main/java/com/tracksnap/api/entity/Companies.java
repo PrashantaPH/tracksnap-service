@@ -30,6 +30,9 @@ public class Companies {
 	@Column(nullable = false)
 	private String name;
 
+	@Column(name = "logo_link")
+	private String logoLink;
+
 	@Column(name = "logo_image", length = 1048576)
 	@Lob
 	private byte[] logoImage;
@@ -39,6 +42,12 @@ public class Companies {
 
 	@Column(name = "headquarter_city")
 	private String headquarterCity;
+
+	@Column(name = "country_link")
+	private String countryLink;
+
+	@Column(name = "country_Name")
+	private String countryName;
 
 	@Column(name = "country_flag_image", length = 1048576)
 	@Lob
@@ -94,7 +103,7 @@ public class Companies {
 		super();
 	}
 
-	public Companies(Long companyId, String name, int foundedYear,  String headquarterCity, byte[] logoImage) {
+	public Companies(Long companyId, String name, int foundedYear, String headquarterCity, byte[] logoImage) {
 		super();
 		this.companyId = companyId;
 		this.name = name;
@@ -119,6 +128,14 @@ public class Companies {
 		this.name = name;
 	}
 
+	public String getLogoLink() {
+		return logoLink;
+	}
+
+	public void setLogoLink(String logoLink) {
+		this.logoLink = logoLink;
+	}
+
 	public byte[] getLogoImage() {
 		return logoImage;
 	}
@@ -141,6 +158,22 @@ public class Companies {
 
 	public void setHeadquarterCity(String headquarterCity) {
 		this.headquarterCity = headquarterCity;
+	}
+
+	public String getCountryLink() {
+		return countryLink;
+	}
+
+	public void setCountryLink(String countryLink) {
+		this.countryLink = countryLink;
+	}
+
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
 	}
 
 	public byte[] getCountryFlagImage() {
